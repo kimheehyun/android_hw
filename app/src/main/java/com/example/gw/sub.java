@@ -2,7 +2,9 @@ package com.example.gw;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -36,12 +38,56 @@ public class sub extends AppCompatActivity {
 
             String message = "Student Info: " + name + ", " + major + ", " + id;
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-        } else {
+        }
+        else {
             Toast.makeText(getApplicationContext(), "No data received!", Toast.LENGTH_LONG).show();
         }
 
-        Button goback = findViewById(R.id.btn_goback);
-        goback.setOnClickListener(v -> finish());
+
+        //get text
+        EditText in_url=findViewById(R.id.insert_url);
+        String url=in_url.getText().toString();
+
+        EditText in_phone=findViewById(R.id.insert_phone);
+        String phone=in_phone.getText().toString();
+
+
+
+
+        //뒤로가서 종료
+        Button go_back = findViewById(R.id.btn_goback);
+
+        go_back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick (View view){
+
+                Bundle send_bundle=new Bundle();
+
+                send_bundle.putString("url",url);
+                send_bundle.putString("phone",phone);
+
+                //보냄.
+                Intent result_intent=new Intent(sub.this,MainActivity.class);
+                result_intent.putExtras(send_bundle);
+                // Return the result to MainActivity
+                setResult(RESULT_OK, result_intent);
+
+
+
+
+              finish();
+            }
+
+
+
+
+
+
+
+        });
+
+
+
 
 
 //    finish();

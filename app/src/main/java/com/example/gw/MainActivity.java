@@ -2,6 +2,7 @@ package com.example.gw;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -32,16 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button login_btn=findViewById(R.id.btn_login);
-        Button web=findViewById(R.id.web);
-        Button phone=findViewById(R.id.contact);
-
-
 
         login_btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
+
 
             @Override
             public void onClick(View view){ //버튼 누르면 실행.
@@ -68,25 +62,50 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
 
+            }
 
 
+        });
+
+        //sub 로 부터 data 받음.
+        Intent get_intent=getIntent();
+        Bundle get_bundle=get_intent.getExtras();
+
+        assert get_bundle != null;
+        String url=get_bundle.getString("url");
+        String phone_num= get_bundle.getString("phone");
+
+
+        //웹사이트이동
+        Button web=findViewById(R.id.web);
+
+        web.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                Intent web_intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://"+url));
+                startActivity(web_intent);
+            }
+
+
+        });
+
+        Button phone=findViewById(R.id.contact);
+
+        //폰 번호
+        phone.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View v){
+
+                Intent phone_intent=new Intent(Intent.ACTION_VIEW,Uri.parse("tel://"+phone_num));
+                startActivity(phone_intent);
 
             }
 
 
 
-
-
-
-
-
-
-
-
         });
-
-
-
 
 
 
